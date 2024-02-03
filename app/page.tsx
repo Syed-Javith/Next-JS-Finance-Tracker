@@ -1,38 +1,25 @@
 "use client"
 import { formatCurrency } from "@/lib/utils";
-import MyExpense from "./components/MyExpense";
+import MyExpense from "../components/MyExpense";
 import { useState } from "react";
-import Modal from "./components/Modal";
+import IncomeModal from "../components/IncomeModal";
 
 export default function Home() {
-  const [isOpen , setIsOpen] = useState<boolean>(false);
+  const [isIncomeModalOpen , setIsIncomeModalOpen] = useState<boolean>(false);
   return (
     <>
       {
-        isOpen && 
-        <Modal isOpen={isOpen} setIsOpen={setIsOpen} >
-          <h3>Hello</h3>
-          <form>
-            <div className="form-group">
-              <label htmlFor="income">Income</label><br />
-              <input className="form-input" type="number" name="income" id="income" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Description</label><br />
-              <input className="form-input" type="number" name="description" id="description" />
-            </div>
-            <button className="btn btn-ok">Add</button>
-          </form>
-        </Modal>
+        isIncomeModalOpen && <IncomeModal isOpen={isIncomeModalOpen} setIsOpen={setIsIncomeModalOpen} />
+        
       }
       <div className="px-[5%]">
         <p className="text-gray-500">My Balance</p>
         <h1 className="text-3xl">{formatCurrency(100000)}</h1>
         <div className="flex gap-4 mt-4">
-          <button onClick={() => setIsOpen(true)} className="btn btn-primary">
+          <button onClick={() => setIsIncomeModalOpen(true)} className="btn btn-primary">
             + Expense
           </button>
-          <button onClick={() => setIsOpen(true)} className="btn btn-ok">
+          <button onClick={() => setIsIncomeModalOpen(true)} className="btn btn-ok">
             + Income
           </button>
         </div>
