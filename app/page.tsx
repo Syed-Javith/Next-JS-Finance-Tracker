@@ -1,11 +1,15 @@
 "use client"
 import { formatCurrency } from "@/lib/utils";
 import MyExpense from "../components/MyExpense";
-import { useState } from "react";
-import IncomeModal from "../components/IncomeModal";
+import { useContext, useState } from "react";
+import IncomeModal from "../components/Income/IncomeModal";
+import { finaceContext } from "./FinanceProvider";
 
 export default function Home() {
+  const {incomeDocs} = useContext(finaceContext);
   const [isIncomeModalOpen , setIsIncomeModalOpen] = useState<boolean>(false);
+  const [balance,setBalance] = useState<number>( incomeDocs.reduce((a,b) => { return (a + b.amount )},0) )
+
   return (
     <>
       {
@@ -14,7 +18,7 @@ export default function Home() {
       }
       <div className="px-[5%]">
         <p className="text-gray-500">My Balance</p>
-        <h1 className="text-3xl">{formatCurrency(100000)}</h1>
+        <h1 className="text-3xl">{formatCurrency(balance)}</h1>
         <div className="flex gap-4 mt-4">
           <button onClick={() => setIsIncomeModalOpen(true)} className="btn btn-primary">
             + Expense

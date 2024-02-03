@@ -1,7 +1,11 @@
+import { finaceContext } from '@/app/FinanceProvider';
 import { BarChart3Icon, LogOut } from 'lucide-react'
-import React from 'react'
+import React, { useContext } from 'react'
 
 const Nav = () => {
+  const { incomeDocs } = useContext(finaceContext);
+  console.log(incomeDocs);
+  
   return (
     <div>
       <header className="flex justify-between mx-auto my-4">
