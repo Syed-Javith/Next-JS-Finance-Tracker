@@ -8,10 +8,10 @@ import MyExpense from './Expense/MyExpense';
 import Nav from './Nav';
 import { userContext } from '@/app/UserProvider';
 import ExpenseModal from './Expense/ExpenseModal';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut, Line } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineController, LinearScale, PointElement, LineElement, CategoryScale } from "chart.js";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, LineController,LinearScale,PointElement,LineElement,CategoryScale);
 
 const HomePage = () => {
     const { incomeDocs, setIncomeDocs, expenseDocs, setExpenseDocs } = useContext(finaceContext);
@@ -91,6 +91,21 @@ const HomePage = () => {
                                     data: expenseDocs.map((expense) => expense.amount),
                                     backgroundColor: expenseDocs.map((expense) => expense.color),
                                     borderColor: ["#18181b"],
+                                    borderWidth: 5,
+                                },
+                            ],
+                        }}
+                    />
+                </div>
+                <div className='container my-4 md:w-[500px] md:h-[500px]w-[400px] h-[400px]'>
+                <Line
+                        data={{
+                            labels: incomeDocs.map((income) => income.createdAt.toLocaleDateString()),
+                            datasets: [
+                                {
+                                    label: "incomes",
+                                    data: incomeDocs.map((income) => income.amount),
+                                    borderColor: ["#53BDFF"],
                                     borderWidth: 5,
                                 },
                             ],
