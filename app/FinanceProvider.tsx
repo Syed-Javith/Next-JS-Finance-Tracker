@@ -11,7 +11,8 @@ interface FinanceContextSchema {
     setExpenseDocs: Dispatch<SetStateAction<ExpenseDocument[]>>
     addIncomeDocs: Function,
     deleteIncomeDocs: Function,
-    addExpenseDocs : Function
+    addExpenseDocs: Function,
+    deleteExpenseDocs: Function
 }
 
 export const finaceContext = createContext<FinanceContextSchema>({
@@ -21,7 +22,8 @@ export const finaceContext = createContext<FinanceContextSchema>({
     setExpenseDocs: () => { },
     addIncomeDocs: async () => { },
     deleteIncomeDocs: async () => { },
-    addExpenseDocs : async () => {}
+    addExpenseDocs: async () => { },
+    deleteExpenseDocs: async () => { }
 })
 
 export const FinanceProvider = ({ children }: { children: React.ReactNode }) => {
@@ -61,7 +63,27 @@ export const FinanceProvider = ({ children }: { children: React.ReactNode }) => 
             console.log(error);
         }
     }
-    const value = { incomeDocs, addIncomeDocs, deleteIncomeDocs, setIncomeDocs, expenseDocs, setExpenseDocs , addExpenseDocs}
+    const deleteExpenseDocs = async (id: string) => {
+        try {
+            const docRef = doc(db, "expense", id);
+            await deleteDoc(docRef);
+            setExpenseDocs((prev) => {
+                return prev.filter((e) => e.id != id)
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const value = {
+        incomeDocs,
+        addIncomeDocs,
+        deleteIncomeDocs,
+        setIncomeDocs,
+        expenseDocs,
+        setExpenseDocs,
+        addExpenseDocs,
+        deleteExpenseDocs
+    }
     return <finaceContext.Provider value={value}>
         {children}
     </finaceContext.Provider>

@@ -76,7 +76,7 @@ const HomePage = () => {
                     <div className="flex flex-col gap-4">
                         {
                             expenseDocs.map((expense) => {
-                                return <MyExpense key={expense.id} amount={expense.amount} color={expense.color} title={expense.title} />
+                                return <MyExpense key={expense.id} id={expense.id} amount={expense.amount} color={expense.color} title={expense.title} />
                             })
                         }
                     </div>
@@ -97,7 +97,8 @@ const HomePage = () => {
                         }}
                     />
                 </div>
-                <div className='container my-4 md:w-[500px] md:h-[500px]w-[400px] h-[400px]'>
+                <div className='container my-8 md:w-[500px] md:h-[500px]w-[400px] h-[400px]'>
+                <h3 className="text-3xl my-4">My Income</h3>
                 <Line
                         data={{
                             labels: incomeDocs.map((income) => income.createdAt.toLocaleDateString()),
@@ -106,7 +107,7 @@ const HomePage = () => {
                                     label: "incomes",
                                     data: incomeDocs.map((income) => income.amount),
                                     borderColor: ["#53BDFF"],
-                                    borderWidth: 5,
+                                    borderWidth: 1,
                                 },
                             ],
                         }}

@@ -1,18 +1,14 @@
-import { finaceContext } from '@/app/FinanceProvider';
 import { formatCurrency } from '@/lib/utils';
 import { IncomeDocument } from '@/types/income.doc'
 import { CalendarDays, Trash2Icon } from 'lucide-react';
-import React, { FC, useContext } from 'react'
+import React, { FC } from 'react'
+import DeleteButton from '../DeleteButton';
 
 interface IncomeHistoryProps {
     incomes: IncomeDocument[],
 }
 
 const IncomeHistory: FC<IncomeHistoryProps> = ({ incomes }) => {
-    const {deleteIncomeDocs} = useContext(finaceContext)
-    const deleteIncomeHandler = async (id : string) => {
-        await deleteIncomeDocs(id)
-    }
     return (
         <div className='mt-4'>
             {
@@ -25,10 +21,10 @@ const IncomeHistory: FC<IncomeHistoryProps> = ({ incomes }) => {
                                 </p>
                             </div>
                             <div className='flex flex-col gap-2 w-full mt-auto'>
-                                <p className='flex gap-2'><CalendarDays /> {income.createdAt.toLocaleDateString('in')}</p>
-                                <div>
-                                    <Trash2Icon onClick={() => deleteIncomeHandler(income.id)} className='self-end md:size-6 size-4' />
-                                </div>
+                                <p className='flex gap-2 self-end'><CalendarDays /> {income.createdAt.toLocaleDateString('in')}</p>
+                                <DeleteButton context={'income'} id={income.id}>
+                                    <Trash2Icon />
+                                </DeleteButton>
                             </div>
                         </div>
                     </div>;

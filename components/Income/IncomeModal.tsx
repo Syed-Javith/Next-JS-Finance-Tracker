@@ -37,9 +37,7 @@ const IncomeModal: FC<IncomeModalProps> = ({ isOpen, setIsOpen }) => {
         const colRef = collection(db, "income")
         const q = query(colRef, where("uid", "==", user?.uid))
         try {
-            const docs = await getDocs(q)
             const retreivedDocs = await getIncomeDocuments(q, user?.uid + "")
-            console.log(retreivedDocs);
             if (retreivedDocs) {
                 setIncomeDocs(retreivedDocs);
             }

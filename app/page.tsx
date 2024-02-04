@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       {
-        !loading ? (!user ? <Sigin /> : <HomePage />) : <div>Wait we are loading your information...</div>
+        !loading ? (!user ? <Sigin /> : <HomePage />) : <div className="text-center font-bold m-auto">Wait we are loading your information...</div>
       }
     </>
   );
