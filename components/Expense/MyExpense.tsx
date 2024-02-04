@@ -8,7 +8,7 @@ interface MyExpenseProps {
 }
 const MyExpense : FC<MyExpenseProps> = ({ title , amount , color } ) => {
   return (
-    <div className="w-[50vw]">
+    <div className="md:w-[50vw] w-[80vw]">
     <div className="bg-slate-500 rounded-full flex items-center py-2 hover:scale-105 transition-all">
       <div className={"h-[20px] w-[20px] rounded-full ml-2"} style={{backgroundColor : color}}></div>
       <div className="flex justify-between flex-1 mx-2">

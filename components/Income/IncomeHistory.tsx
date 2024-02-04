@@ -21,13 +21,13 @@ const IncomeHistory: FC<IncomeHistoryProps> = ({ incomes }) => {
                         <div className='p-4 w-[90%] bg-slate-700 text-white rounded-md flex justify-evenly'>
                             <div>
                                 <p>
-                                    <span className='text-xl font-bold text-blue-400 mr-2'>{income.description}</span> {formatCurrency(income.amount)}
+                                    <span className='md:text-xl font-bold text-blue-400 mr-2 text-md'>{income.description}</span> {formatCurrency(income.amount)}
                                 </p>
                             </div>
                             <div className='flex flex-col gap-2 w-full mt-auto'>
                                 <p className='flex gap-2'><CalendarDays /> {income.createdAt.toLocaleDateString('in')}</p>
                                 <div>
-                                    <Trash2Icon onClick={() => deleteIncomeHandler(income.id)} className='self-end' size={20} />
+                                    <Trash2Icon onClick={() => deleteIncomeHandler(income.id)} className='self-end md:size-6 size-4' />
                                 </div>
                             </div>
                         </div>
