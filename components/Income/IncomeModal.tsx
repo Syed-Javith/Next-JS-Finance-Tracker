@@ -50,7 +50,7 @@ const IncomeModal: FC<IncomeModalProps> = ({ isOpen, setIsOpen }) => {
     }
     useEffect(() => {
         getIncomes();
-    }, [])
+    })
 
     return (
         <Modal isOpen={isOpen} setIsOpen={setIsOpen} >

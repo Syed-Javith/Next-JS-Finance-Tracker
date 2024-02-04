@@ -5,12 +5,12 @@ import Sigin from "@/components/Sigin";
 import HomePage from "@/components/HomePage";
 
 export default function Home() {
-  const { user } = useContext(userContext);
+  const { user , loading} = useContext(userContext);
 
   return (
     <>
       {
-        !user ? <Sigin /> : <HomePage />
+        !loading ? (!user ? <Sigin /> : <HomePage />) : <div>Wait we are loading your information...</div>
       }
     </>
   );

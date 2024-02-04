@@ -23,7 +23,7 @@ const HomePage = () => {
         const colRef = collection(db, "income")
         const q = query(colRef, where("uid", "==", user?.uid))
         const retreivedDocs = await getIncomeDocuments(q, user?.uid + "")
-        console.log(retreivedDocs);
+        // console.log(retreivedDocs);
         if (retreivedDocs) {
             setIncomeDocs(retreivedDocs);
         }
@@ -32,7 +32,7 @@ const HomePage = () => {
         const colRef = collection(db, "expense")
         const q = query(colRef, where("uid", "==", user?.uid))
         const retreivedDocs = await getExpenseDocuments(q, user?.uid + "")
-        console.log(retreivedDocs);
+        // console.log(retreivedDocs);
 
         if (retreivedDocs) {
             setExpenseDocs(retreivedDocs);
@@ -44,7 +44,7 @@ const HomePage = () => {
     useEffect(() => {
         getIncomes();
         getExpenses();
-    }, [])
+    })
     useEffect(() => {
         updateBalance();
     }, [incomeDocs, expenseDocs])
