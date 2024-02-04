@@ -22,6 +22,9 @@
    @apply rounded-md mt-2 h-[2rem] w-full
  }
  .form-group{
-   @apply mb-4
+   @apply mb-4 text-white font-bold
+ }
+ ::placeholder{
+   @apply font-thin italic ml-4
  }
 }

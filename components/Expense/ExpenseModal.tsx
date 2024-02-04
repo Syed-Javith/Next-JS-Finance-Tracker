@@ -28,6 +28,7 @@ const ExpenseModal : FC<ExpenseModalProps>= ({ isOpen , setIsOpen }) => {
     }
     await addExpenseDocs(addExpenseDoc)
     setIsPending(false)
+    setIsOpen(false)
   }
   return (
     <div>

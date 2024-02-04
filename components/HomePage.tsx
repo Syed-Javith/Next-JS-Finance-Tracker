@@ -8,6 +8,10 @@ import MyExpense from './Expense/MyExpense';
 import Nav from './Nav';
 import { userContext } from '@/app/UserProvider';
 import ExpenseModal from './Expense/ExpenseModal';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {
     const { incomeDocs, setIncomeDocs, expenseDocs, setExpenseDocs } = useContext(finaceContext);
@@ -77,6 +81,22 @@ const HomePage = () => {
                         }
                     </div>
                 </section>
+                <div className='container my-4 md:w-[30%] md:h-[50%] w-auto h-auto'>
+                    <Doughnut
+                        data={{
+                            labels: expenseDocs.map((expense) => expense.title),
+                            datasets: [
+                                {
+                                    label: "Expenses",
+                                    data: expenseDocs.map((expense) => expense.amount),
+                                    backgroundColor: expenseDocs.map((expense) => expense.color),
+                                    borderColor: ["#18181b"],
+                                    borderWidth: 5,
+                                },
+                            ],
+                        }}
+                    />
+                </div>
             </div>
         </div>
     )

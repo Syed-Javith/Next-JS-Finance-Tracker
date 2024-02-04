@@ -31,6 +31,7 @@ const IncomeModal: FC<IncomeModalProps> = ({ isOpen, setIsOpen }) => {
         }
         await addIncomeDocs(addIncomeDoc)
         setIsPending(false)
+        setIsOpen(false)
     }
     const getIncomes = async () => {
         const colRef = collection(db, "income")
@@ -53,17 +54,16 @@ const IncomeModal: FC<IncomeModalProps> = ({ isOpen, setIsOpen }) => {
 
     return (
         <Modal isOpen={isOpen} setIsOpen={setIsOpen} >
-            <h3>Hello</h3>
             <form onSubmit={(e) => { e.preventDefault(); addIncomeDocsHandler(); }}>
                 <div className="form-group">
                     <label htmlFor="income">Income</label><br />
-                    <input ref={incomeRef} className="form-input" type="number" name="income" id="income" />
+                    <input ref={incomeRef} className="form-input" placeholder='Enter your expenses' type="number" name="income" id="income" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Description</label><br />
-                    <input ref={descriptionRef} className="form-input" name="description" id="description" />
+                    <input ref={descriptionRef} className="form-input" placeholder='Enter the description' name="description" id="description" />
                 </div>
-                <button disabled={ispending} className="btn btn-ok">Add</button>
+                <button disabled={ispending} className="btn btn-ok">{ispending ? "Adding..." : "Add Expense" }</button>
             </form>
             {
                 incomeDocs.length > 0 && <IncomeHistory incomes={incomeDocs} />
