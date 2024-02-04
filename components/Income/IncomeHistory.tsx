@@ -17,7 +17,7 @@ const IncomeHistory: FC<IncomeHistoryProps> = ({ incomes }) => {
         <div className='mt-4'>
             {
                 incomes.map((income) => {
-                    return <div className='my-2'>
+                    return <div key={income.id} className='my-2'>
                         <div className='p-4 w-[90%] bg-slate-700 text-white rounded-md flex justify-evenly'>
                             <div>
                                 <p>

@@ -1,11 +1,13 @@
 "use client"
 import React, { Dispatch, FC, SetStateAction, useContext, useEffect, useRef, useState } from 'react'
 import Modal from '../Modal'
-import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { db } from "@/lib/firebase/firebase.config"
 import { AddIncomeDocument, IncomeDocument } from '@/types/income.doc'
 import IncomeHistory from './IncomeHistory'
 import { finaceContext } from '@/app/FinanceProvider'
+import { userContext } from '@/app/UserProvider'
+import { getIncomeDocuments } from '@/lib/utils'
 
 interface IncomeModalProps {
     isOpen: boolean,
@@ -13,36 +15,33 @@ interface IncomeModalProps {
 }
 const IncomeModal: FC<IncomeModalProps> = ({ isOpen, setIsOpen }) => {
 
-    const {incomeDocs, setIncomeDocs , addIncomeDocs} = useContext(finaceContext);
+    const { incomeDocs, setIncomeDocs, addIncomeDocs } = useContext(finaceContext);
+    const { user } = useContext(userContext)
     const incomeRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLInputElement>(null);
-    const [ispending , setIsPending] = useState<boolean>(false);
+    const [ispending, setIsPending] = useState<boolean>(false);
 
     const addIncomeDocsHandler = async () => {
         setIsPending(true)
-        const addIncomeDoc : AddIncomeDocument = { 
-            amount : Number(incomeRef.current?.value || 0) ,
-            description : descriptionRef.current?.value || "Nothing",
-            createdAt : new Date()
+        const addIncomeDoc: AddIncomeDocument = {
+            uid: user?.uid,
+            amount: Number(incomeRef.current?.value || 0),
+            description: descriptionRef.current?.value || "Nothing",
+            createdAt: new Date()
         }
         await addIncomeDocs(addIncomeDoc)
         setIsPending(false)
     }
     const getIncomes = async () => {
         const colRef = collection(db, "income")
+        const q = query(colRef, where("uid", "==", user?.uid))
         try {
-            const docs = await getDocs(colRef)
-            const retreivedDocs: IncomeDocument[] = docs.docs.map((doc) => {
-                const idoc: IncomeDocument = { 
-                    id: doc.id, 
-                    amount: doc.data().amount, 
-                    createdAt: new Date(doc.data().createdAt.toMillis()), 
-                    description: doc.data().description 
-                }
-                return idoc;
-            });
-            // console.log(retreivedDocs);
-            setIncomeDocs(retreivedDocs)
+            const docs = await getDocs(q)
+            const retreivedDocs = await getIncomeDocuments(q, user?.uid + "")
+            console.log(retreivedDocs);
+            if (retreivedDocs) {
+                setIncomeDocs(retreivedDocs);
+            }
 
         } catch (error) {
             console.log(error);
@@ -50,12 +49,12 @@ const IncomeModal: FC<IncomeModalProps> = ({ isOpen, setIsOpen }) => {
     }
     useEffect(() => {
         getIncomes();
-    },[])
+    }, [])
 
     return (
         <Modal isOpen={isOpen} setIsOpen={setIsOpen} >
             <h3>Hello</h3>
-            <form onSubmit={(e) => { e.preventDefault(); addIncomeDocsHandler();}}>
+            <form onSubmit={(e) => { e.preventDefault(); addIncomeDocsHandler(); }}>
                 <div className="form-group">
                     <label htmlFor="income">Income</label><br />
                     <input ref={incomeRef} className="form-input" type="number" name="income" id="income" />
